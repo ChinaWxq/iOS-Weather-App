@@ -9,7 +9,7 @@
 import Foundation
 import HandyJSON
 
-//位置Model
+//位置
 struct Location: HandyJSON {
     var path: String?
     var timezone_offset: String?
@@ -19,7 +19,7 @@ struct Location: HandyJSON {
     var name: String?
 }
 
-//每日天气Model
+//每日天气
 struct Daily: HandyJSON {
     var rainfall: String?
     var wind_speed: String?
@@ -37,34 +37,82 @@ struct Daily: HandyJSON {
     var code_night: String?
 }
 
-//近3天天气结果Model
-struct ThreeDaysWeatherResult: HandyJSON {
+//近期天天气结果
+struct RecentDaysWeatherResult: HandyJSON {
     var location: Location?
     var daily: [Daily]?
     var last_update: String?
     
 }
 
-//近3天天气Model
-struct ThreeDaysWeatherModel: HandyJSON {
-    var results: [ThreeDaysWeatherResult]?
+//近期天天气
+struct RecentDaysWeatherModel: HandyJSON {
+    var results: [RecentDaysWeatherResult]?
 }
 
-//今天天气Model
+//今天天气
 struct Now : HandyJSON {
     var text: String?
     var temperature: String?
     var code: String?
 }
 
-//今天天气结果Model
+//今天天气结果
 struct TodayWeatherResult: HandyJSON {
     var location: Location?
     var now: Now?
     var last_update: String?
 }
 
-//今天天气Model
+//今天天气
 struct TodayWeatherModel: HandyJSON {
     var results: [TodayWeatherResult]?
+}
+
+//小时播报
+struct Hourly: HandyJSON {
+    var time: String?
+    var wind_speed: String?
+    var temperature: String?
+    var text: String?
+    var wind_direction: String?
+    var humidity: String?
+    var code: String?
+}
+
+struct LiveWeatherReuslt: HandyJSON {
+    var hourly: [Hourly]?
+}
+
+//24小时实时天气
+struct LiveWeatherModel: HandyJSON {
+    var results: [LiveWeatherReuslt]?
+}
+
+//实时天气数据
+struct LiveData {
+    var nowTime: String
+    var imageCode: String
+    var degree: String
+    
+    init(time: String = "下午8时", code: String = "0", degree: String = "6") {
+        self.nowTime = time
+        self.imageCode = code
+        self.degree = degree
+    }
+}
+
+//近期天气数据
+struct RecentDayData {
+    var imageCode: String
+    var highDegree: String
+    var lowDegree: String
+    var detailText: String
+    
+    init(code: String = "1", hCode: String = "8", lCode: String = "0", text: String = "今天多云") {
+        self.imageCode = code
+        self.highDegree = hCode
+        self.lowDegree = lCode
+        self.detailText = text
+    }
 }

@@ -1,6 +1,6 @@
 # Simple-Weather-App
-Study from a simple weather app.
+Imitate ios native weather app.
 
 <p align="center">
-<img src="resource/2.jpg" width="231" height="500"/>
+<img src="demo.png" width="231" height="500"/>
 </p>
