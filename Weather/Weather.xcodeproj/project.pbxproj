@@ -11,7 +11,6 @@
 		941C2DA823D5E41500759745 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941C2DA723D5E41500759745 /* ViewController.swift */; };
 		941C2DAD23D5E41700759745 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 941C2DAC23D5E41700759745 /* Assets.xcassets */; };
 		941C2DB023D5E41700759745 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 941C2DAE23D5E41700759745 /* LaunchScreen.storyboard */; };
-		941C2DB823D5F46B00759745 /* WeatherCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941C2DB723D5F46B00759745 /* WeatherCell.swift */; };
 		941C2DBA23D6831700759745 /* WeatherModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941C2DB923D6831700759745 /* WeatherModel.swift */; };
 		94D5AD4923D86B4F005A7415 /* FirstTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D5AD4823D86B4F005A7415 /* FirstTableViewCell.swift */; };
 		94D5AD4B23D86B5A005A7415 /* SecondTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D5AD4A23D86B5A005A7415 /* SecondTableViewCell.swift */; };
@@ -30,7 +29,6 @@
 		941C2DAC23D5E41700759745 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		941C2DAF23D5E41700759745 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		941C2DB123D5E41700759745 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		941C2DB723D5F46B00759745 /* WeatherCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherCell.swift; sourceTree = "<group>"; };
 		941C2DB923D6831700759745 /* WeatherModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherModel.swift; sourceTree = "<group>"; };
 		94D5AD4823D86B4F005A7415 /* FirstTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstTableViewCell.swift; sourceTree = "<group>"; };
 		94D5AD4A23D86B5A005A7415 /* SecondTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondTableViewCell.swift; sourceTree = "<group>"; };
@@ -88,7 +86,6 @@
 				941C2DA323D5E41500759745 /* AppDelegate.swift */,
 				941C2DA723D5E41500759745 /* ViewController.swift */,
 				941C2DB923D6831700759745 /* WeatherModel.swift */,
-				941C2DB723D5F46B00759745 /* WeatherCell.swift */,
 				941C2DAC23D5E41700759745 /* Assets.xcassets */,
 				941C2DAE23D5E41700759745 /* LaunchScreen.storyboard */,
 				941C2DB123D5E41700759745 /* Info.plist */,
@@ -237,7 +234,6 @@
 				94D5AD4923D86B4F005A7415 /* FirstTableViewCell.swift in Sources */,
 				94D5AD5123D86B72005A7415 /* FifthTableViewCell.swift in Sources */,
 				941C2DBA23D6831700759745 /* WeatherModel.swift in Sources */,
-				941C2DB823D5F46B00759745 /* WeatherCell.swift in Sources */,
 				94D5AD4B23D86B5A005A7415 /* SecondTableViewCell.swift in Sources */,
 				94D5AD4D23D86B60005A7415 /* ThirdTableViewCell.swift in Sources */,
 				94D5AD4F23D86B6A005A7415 /* FourthTableViewCell.swift in Sources */,

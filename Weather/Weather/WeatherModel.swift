@@ -55,6 +55,16 @@ struct Now : HandyJSON {
     var text: String?
     var temperature: String?
     var code: String?
+    var wind_scale: String?
+    var wind_speed: String?
+    var pressure: String?
+    var wind_direction: String?
+    var wind_direction_degree: String?
+    var visibility: String?
+    var clouds: String?
+    var feels_like: String?
+    var humidity: String?
+    var dew_point: String?
 }
 
 //今天天气结果
@@ -114,5 +124,38 @@ struct RecentDayData {
         self.highDegree = hCode
         self.lowDegree = lCode
         self.detailText = text
+    }
+}
+
+//今日天气数据
+struct TodayData {
+    var text: String
+    var temperature: String
+    var code: String
+    var wind_scale: String
+    var wind_speed: String
+    var pressure: String
+    var wind_direction: String
+    var wind_direction_degree: String
+    var visibility: String
+    var clouds: String
+    var feels_like: String
+    var humidity: String
+    var dew_point: String
+    
+    init(text: String = "多云", temperature: String = "0", code: String = "0", wind_scale: String = "2", wind_speed: String = "8.05", pressure: String = "1018", wind_direction: String = "西北", wind_direction_degree: String = "340", visibility: String = "16.09", clouds: String = "90", feels_like: String = "14", humidity: String = "90", dew_point: String = "-12") {
+        self.text = text
+        self.temperature = temperature
+        self.code = code
+        self.wind_scale = wind_scale
+        self.wind_speed = wind_speed
+        self.pressure = pressure
+        self.wind_direction = wind_direction
+        self.wind_direction_degree = wind_direction_degree
+        self.visibility = visibility
+        self.clouds = clouds
+        self.feels_like = feels_like
+        self.humidity = humidity
+        self.dew_point = dew_point
     }
 }

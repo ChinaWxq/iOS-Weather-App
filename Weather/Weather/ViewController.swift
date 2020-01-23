@@ -18,10 +18,16 @@ let ScreenHeight = Frame.height
 
 class ViewController: UIViewController {
     
+    //近日数据
     var recentDayData: [RecentDayData] = Array<RecentDayData>(repeating: RecentDayData(), count: 10)
     
+    //今日数据
+    var todayData = TodayData()
+    
+    //身份数组
     fileprivate let tableViewId = ["firstCell", "secondCell", "thridCell", "fourthCell", "fifthCell"]
     
+    //获取城市后提出网络请求获取数据
     fileprivate var city: String? {
         didSet {
             self.locationManager.stopUpdatingLocation()
@@ -69,28 +75,18 @@ class ViewController: UIViewController {
                     }
                 }
             }
+            
+            let parameter3: Parameters = ["key":"S_1AG0viprcOBXy96", "location": self.city!,"language":"zh-Hans","unit":"c"]
+            Alamofire.request("https://api.seniverse.com/v3/weather/now.json?", method: .get, parameters: parameter3, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
+                if let value = response.result.value {
+                    let json = JSON(value)
+                    if let obj = JSONDeserializer<TodayWeatherModel>.deserializeFrom(json: json.debugDescription) {
+                        self.todayData = TodayData(text: obj.results?[0].now?.text ?? "多云", temperature: obj.results?[0].now?.temperature ?? "0", code: obj.results?[0].now?.code ?? "1", wind_scale: obj.results?[0].now?.wind_scale ?? "1", wind_speed: obj.results?[0].now?.wind_speed ?? "2", pressure: obj.results?[0].now?.pressure ?? "1000", wind_direction: obj.results?[0].now?.wind_direction ?? "西北", wind_direction_degree: obj.results?[0].now?.wind_direction_degree ?? "30", visibility: obj.results?[0].now?.visibility ?? "1", clouds: obj.results?[0].now?.clouds ?? "90", feels_like: obj.results?[0].now?.feels_like ?? "10", humidity: obj.results?[0].now?.humidity ?? "70")
+                    }
+                    self.detailWeatherView.reloadSections(NSIndexSet(index: 4)  as IndexSet, with: UITableView.RowAnimation.none)
+                }
+            }
         }
-    }
-    
-    func setupView() {
-        self.view.addSubview(backImageView)
-        self.view.addSubview(cityLabel)
-        self.view.addSubview(currentWeatherTextLabel)
-        self.view.addSubview(currentWeatherDegreeLabel)
-        self.view.addSubview(detailWeatherView)
-    }
-    
-    override func viewDidLoad() {
-        
-        super.viewDidLoad()
-        setupView()
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.startUpdatingLocation()
-        // Do any additional setup after loading the view.
-    }
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
     }
     
     lazy var backImageView: UIImageView = {
@@ -120,7 +116,7 @@ class ViewController: UIViewController {
     
     lazy var currentWeatherDegreeLabel: UILabel = {
         let label = UILabel(frame: CGRect(x: ScreenWidth / 2 - 100, y: 130, width: 200, height: 80))
-        label.font = UIFont.systemFont(ofSize: 100)
+        label.font = UIFont.systemFont(ofSize: 88)
         label.text = "8"
         label.textColor = .white
         label.textAlignment = .center
@@ -136,18 +132,44 @@ class ViewController: UIViewController {
     lazy var detailWeatherView: UITableView = {
         let tableView = UITableView(frame: CGRect(x: 0, y: 260, width: ScreenWidth, height: ScreenHeight - 300))
         tableView.backgroundColor = .clear
-        tableView.register(UITableViewCell.classForCoder(), forCellReuseIdentifier: tableViewId[4])
+        tableView.showsVerticalScrollIndicator = false
+        //注册5中cell
         tableView.register(FirstTableViewCell.classForCoder(), forCellReuseIdentifier: tableViewId[0])
         tableView.register(SecondTableViewCell.classForCoder(), forCellReuseIdentifier: tableViewId[1])
         tableView.register(ThirdTableViewCell.classForCoder(), forCellReuseIdentifier: tableViewId[2])
         tableView.register(FourthTableViewCell.classForCoder(), forCellReuseIdentifier: tableViewId[3])
+         tableView.register(FifthTableViewCell.classForCoder(), forCellReuseIdentifier: tableViewId[4])
         tableView.delegate = self
         tableView.dataSource = self
         return tableView
     }()
+    
+    func setupView() {
+        self.view.addSubview(backImageView)
+        self.view.addSubview(cityLabel)
+        self.view.addSubview(currentWeatherTextLabel)
+        self.view.addSubview(currentWeatherDegreeLabel)
+        self.view.addSubview(detailWeatherView)
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupView()
+        //开启位置请求
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
+        // Do any additional setup after loading the view.
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
+    
 }
 
 extension ViewController: CLLocationManagerDelegate {
+    //更新位置
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let location = locations[locations.count - 1]
         let geocoder = CLGeocoder()
@@ -176,7 +198,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
         case 3:
             return 1
         case 4:
-            return 5
+            return 4
         default:
             return 0
         }
@@ -206,8 +228,29 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
             cell.label.text = "今天：当前\(recentDayData[0].detailText)。预计最高气温\(String(describing: recentDayData[0].highDegree))\n, 最低气温\(String(describing: recentDayData[0].lowDegree))"
             return cell
         default:
-            let cell = tableView.dequeueReusableCell(withIdentifier: tableViewId[4], for: indexPath)
-            cell.backgroundColor = .clear
+            let cell = tableView.dequeueReusableCell(withIdentifier: tableViewId[4], for: indexPath) as! FifthTableViewCell
+            switch indexPath.row {
+            case 0:
+                cell.leftTopLabel.text = "体感温度"
+                cell.leftBottomLabel.text = todayData.feels_like
+                cell.rightTopLabel.text = "气压"
+                cell.rightBottomLabel.text = todayData.pressure + "百帕"
+            case 1:
+                cell.leftTopLabel.text = "湿度"
+                cell.leftBottomLabel.text = todayData.humidity + "%"
+                cell.rightTopLabel.text = "能见度"
+                cell.rightBottomLabel.text = todayData.visibility + "公里"
+            case 2:
+                cell.leftTopLabel.text = "风"
+                cell.leftBottomLabel.text = todayData.wind_direction + "  " + todayData.wind_speed + "km/h"
+                cell.rightTopLabel.text = "风力等级"
+                cell.rightBottomLabel.text = todayData.wind_scale
+            default:
+                cell.leftTopLabel.text = "云量"
+                cell.leftBottomLabel.text = todayData.clouds
+                cell.rightTopLabel.text = "露点温度"
+                cell.rightBottomLabel.text = todayData.dew_point
+            }
             return cell
         }
         //return cell
@@ -224,10 +267,9 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
         case 3:
             return 60
         default:
-            return 40
+            return 50
         }
     }
-    
 }
 
 
