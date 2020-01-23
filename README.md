@@ -6,5 +6,5 @@ According to iOS native weather app, use UITableView , UICollectionView  build u
 Through this project, i review tableView and collectionView. Learn more knowledge about Alamofire , JSON and JSON to Model.
 
 <p align="center">
-<img src="1.gif" width="231" height="500"/>
+<img src="1.gif"/>
 </p>
